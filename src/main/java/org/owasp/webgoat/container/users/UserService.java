@@ -38,15 +38,12 @@ public class UserService implements UserDetailsService {
   }
 
   public void addUser(String username, String password) {
-    // get user if there exists one by the name
-    var userAlreadyExists = userRepository.existsByUsername(username);
-    var webGoatUser = userRepository.save(new WebGoatUser(username, password));
-
-    if (!userAlreadyExists) {
-      userTrackerRepository.save(
-          new UserProgress(username)); // if user previously existed it will not get another tracker
-      createLessonsForUser(webGoatUser);
+    if (userRepository.existsByUsername(username)) {
+      return;
     }
+    var webGoatUser = userRepository.save(new WebGoatUser(username, password));
+    userTrackerRepository.save(new UserProgress(username));
+    createLessonsForUser(webGoatUser);
   }
 
   private void createLessonsForUser(WebGoatUser webGoatUser) {
