@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.actuate.web.exchanges.HttpExchange;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -54,19 +53,11 @@ public class Requests {
   }
 
   private boolean allowedTrace(HttpExchange t, String username) {
-    HttpExchange.Request req = t.getRequest();
-    boolean allowed = true;
-    /* do not show certain traces to other users in a classroom setup */
-    if (req.getUri().getPath().contains("/files") && !req.getUri().getPath().contains(username)) {
-      allowed = false;
-    } else if (req.getUri().getPath().contains("/landing")
-        && req.getUri().getQuery() != null
-        && req.getUri().getQuery().contains("uniqueCode")
-        && !req.getUri().getQuery().contains(StringUtils.reverse(username))) {
-      allowed = false;
+    HttpExchange.Principal principal = t.getPrincipal();
+    if (principal == null) {
+      return false;
     }
-
-    return allowed;
+    return username.equals(principal.getName());
   }
 
   private String path(HttpExchange t) {
