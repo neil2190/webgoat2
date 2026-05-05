@@ -57,7 +57,7 @@
                         </ul>
                     </div>
                     <div class="pull-right">
-                        <span class="text-muted"><b>1</b>–<b><span th:text="${total}"> 50</span> </b> of <b><span th:utext="${total}"></span></b></span>
+                        <span class="text-muted"><b>1</b>–<b><span th:text="${total}"> 50</span> </b> of <b><span th:text="${total}"></span></b></span>
                         <div class="btn-group btn-group-sm">
                             <button type="button" class="btn btn-secundary">
                                 <span class="bi bi-chevron-left"></span>
@@ -75,7 +75,7 @@
                     <a href="#" class="btn btn-danger btn-sm btn-block" role="button">COMPOSE</a>
                     <hr/>
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a class="nav-link active"href="#"><span class="badge pull-right" th:utext="${total}">42</span>
+                        <li class="active"><a class="nav-link active"href="#"><span class="badge pull-right" th:text="${total}">42</span>
                             Inbox </a>
                         </li>
                     </ul>
@@ -121,7 +121,7 @@
                                             <b><span class="pull-right" th:text="${mail.sender}"></span></b>
                                         </div>
                                          <div class="card-body">
-                                            <pre th:utext="${mail.contents}"/>
+                                            <pre th:text="${mail.contents}"/>
                                          </div>
                                     </div>
                             </li>
